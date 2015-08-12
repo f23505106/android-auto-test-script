@@ -27,7 +27,13 @@ function dumpMem()
 	#arg2 stand for pid or process name
 	opLog "get mem usage count:$1"
 	runCmd "dumpsys meminfo $2 > $WORK_PATH/mem$1"
-	runCmd "procrank > $WORK_PATH/procrank$1"
+	#runCmd "procrank > $WORK_PATH/procrank$1"
+	#runCmd "am dumpheap $2 >$WORK_PATH/$1.hprof"
+	#deviceHprofPath="/sdcard/hprof"
+	#adb shell "mkdir $deviceHprofPath"
+	#adb shell "am dumpheap $2 $deviceHprofPath/$1.hprof"
+	#sleep 0.5
+	#adb pull "$deviceHprofPath/$1.hprof" "$WORK_PATH"
 }
 function getLog()
 {
@@ -99,6 +105,7 @@ function init()
 	fi
 	rm -rf "$WORK_PATH"
 	mkdir -p "$WORK_PATH"
+	#adb shell rm -rf "/sdcard/hprof"
 	opLog "init"
 	homeKey
 }
@@ -108,7 +115,7 @@ function mainLoop()
 	act2="com.tencent.tmsecure.demo/com.tencent.tmsecure.demo.deepclean.DeepcleanActivity"
 	processName="com.tencent.tmsecure.demo"
 	startAct $act
-	count=3001  #loop times
+	count=10001  #loop times
 	opLog "main loop"
 	for (( i=0;i<count;++i ))
 	do
@@ -121,7 +128,9 @@ function mainLoop()
 			exit -1
 		fi
 		#G620 tap 547 781
-		tap 821 1390 #nexus6
+		#tap 821 1390 #nexus6
+		#tap 320 795 #64 huawei
+		tap 365 305
 		if ! isCurAct $act2
 		then
 			errStr=`getCurAct`

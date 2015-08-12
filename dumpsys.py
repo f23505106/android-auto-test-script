@@ -30,11 +30,9 @@ while fileInFd:
 	line=fileInFd.readline()
 	resultFile.write("%s\t"%(line.split()[2]))
 	
-	index=0
-	while index<NativeHeapIndex+3:
+	while not "Unknown" in line:
 		line=fileInFd.readline()
-		index+=1
-	line=fileInFd.readline()
+	
 	print(line)
 	resultFile.write("%s\t"%(line.split()[1]))
 	line=fileInFd.readline()
